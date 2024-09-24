@@ -13,8 +13,8 @@ public record Currency
         => All.FirstOrDefault(x => x.Code == code) 
                                              ?? throw new ApplicationException("Invalid currency code");
     
-    public static readonly IReadOnlyCollection<Currency> All = new[]
-    {
+    public static readonly IReadOnlyCollection<Currency> All =
+    [
         Usd, Eur
-    };
+    ];
 }
