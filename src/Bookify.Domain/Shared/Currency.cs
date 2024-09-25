@@ -9,7 +9,7 @@ public record Currency
     private Currency(string code) => Code = code;
     
     public string Code { get; init; }
-    public Currency FromCode(string code) 
+    public static Currency FromCode(string code) 
         => All.FirstOrDefault(x => x.Code == code) 
                                              ?? throw new ApplicationException("Invalid currency code");
     
