@@ -1,0 +1,6 @@
+services:
+  bookify.api:
+    image: ${DOCKER_REGISTRY-}bookifyapi
+    build:
+      context: .
+      dockerfile: src/Bookify.Api/Dockerfile
