@@ -10,13 +10,21 @@ public static class SeedDataExtensions
     public static void SeedData(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
-
+        
         var sqlConnectionFactory = scope.ServiceProvider.GetRequiredService<ISqlConnectionFactory>();
         using var connection = sqlConnectionFactory.CreateConnection();
+        
+        const string checkSql = "SELECT COUNT(1) FROM public.apartments;";
+        var apartmentCount = connection.ExecuteScalar<int>(checkSql);
+        
+        if (apartmentCount > 0)
+        {
+            return;
+        }
 
         var faker = new Faker();
+        var apartments = new List<object>();
 
-        List<object> apartments = [];
         for (var i = 0; i < 100; i++)
         {
             apartments.Add(new
@@ -39,11 +47,11 @@ public static class SeedDataExtensions
         }
 
         const string sql = $"""
-                                INSERT INTO public.apartments
-                                (id, "name", description, address_country, address_state, address_zip_Code, address_city, address_street, price_amount, price_currency, cleaning_fee_amount, cleaning_fee_currency, amenities, last_booked_on_utc)
-                                VALUES(@Id, @Name, @Description, @Country, @State, @ZipCode, @City, @Street, @PriceAmount, @PriceCurrency, @CleaningFeeAmount, @CleaningFeeCurrency, @Amenities, @LastBookedOn);
+                            INSERT INTO public.apartments
+                            (id, "name", description, address_country, address_state, address_zip_Code, address_city, address_street, price_amount, price_currency, cleaning_fee_amount, cleaning_fee_currency, amenities, last_booked_on_utc)
+                            VALUES(@Id, @Name, @Description, @Country, @State, @ZipCode, @City, @Street, @PriceAmount, @PriceCurrency, @CleaningFeeAmount, @CleaningFeeCurrency, @Amenities, @LastBookedOn);
                             """;
-        
+
         connection.Execute(sql, apartments);
     }
 }
