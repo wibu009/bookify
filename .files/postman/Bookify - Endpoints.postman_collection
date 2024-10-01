@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "632a43dc-1285-48dd-9654-c4a3e8708676",
+		"name": "Bookify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6368589"
+	},
+	"item": [
+		{
+			"name": "Apartments",
+			"item": [
+				{
+					"name": "Search Apartments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJvbnJVai1RbTVZc2pEdUVvcUZGMTk3NE1PVDNKVFA0Ml94UXpGYUhnTmZrIn0.eyJleHAiOjE3MDQ4MzMxMTEsImlhdCI6MTcwNDgyOTUxMSwianRpIjoiMjk0MWM1MTItNTk1Ny00NjM5LTk0YjUtNzAxNGY2YjEyMzJjIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvYXV0aC9yZWFsbXMvYm9va2lmeSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJkYTUyZjFiMy0zZTQ4LTQ4M2EtODc4NC1kMGNjYzVkZTgyZDQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJib29raWZ5LWF1dGgtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjBhODY5MWYzLWRjYmEtNDJmMC04OWM1LTk2Nzk2NjFkNjFjZCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiIwYTg2OTFmMy1kY2JhLTQyZjAtODljNS05Njc5NjYxZDYxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik1pbGFuIEpvdmFub3ZpYyIsInByZWZlcnJlZF91c2VybmFtZSI6Im1pbGFuQG1pbGFuam92YW5vdmljLnRlY2giLCJnaXZlbl9uYW1lIjoiTWlsYW4iLCJmYW1pbHlfbmFtZSI6IkpvdmFub3ZpYyIsImVtYWlsIjoibWlsYW5AbWlsYW5qb3Zhbm92aWMudGVjaCJ9.gJg_rUuWdzAh1J-93P-o20aMgsdQ2ksqB_UFxOIzoB5uTikGrNcgsdQSJUwtTu1FUhmzE8zZwSua1KfrP6Nh22Kn9_faEPqCw4b6P82JO2hC76YEofSSYkWdTMM87APg_ohgAAUqScF0mnRhwOytKFgwvX3rksdsBfSHLQdis4QyKkehhBDZ4RU3aHJteOc1EC1nk_4FjCpJxV-7p2PPYF_dOEg_DLXr09pIOdPuSswybPxcage5CsBOCLI5s04eBTM9Y7PSVcwwYjw1uY1n-zQzNj2T66w8Byh827CfetdxdbDu3sIcSdTkfcpVV-4Oj3-WGzpqLEYjIds4vXZusQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/v1/apartments?startDate=07-20-2024&endDate=07-31-2024",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"apartments"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "07-20-2024"
+								},
+								{
+									"key": "endDate",
+									"value": "07-31-2024"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Reserve Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJvbnJVai1RbTVZc2pEdUVvcUZGMTk3NE1PVDNKVFA0Ml94UXpGYUhnTmZrIn0.eyJleHAiOjE3MDQ4MzMxMTEsImlhdCI6MTcwNDgyOTUxMSwianRpIjoiMjk0MWM1MTItNTk1Ny00NjM5LTk0YjUtNzAxNGY2YjEyMzJjIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvYXV0aC9yZWFsbXMvYm9va2lmeSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJkYTUyZjFiMy0zZTQ4LTQ4M2EtODc4NC1kMGNjYzVkZTgyZDQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJib29raWZ5LWF1dGgtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjBhODY5MWYzLWRjYmEtNDJmMC04OWM1LTk2Nzk2NjFkNjFjZCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiIwYTg2OTFmMy1kY2JhLTQyZjAtODljNS05Njc5NjYxZDYxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik1pbGFuIEpvdmFub3ZpYyIsInByZWZlcnJlZF91c2VybmFtZSI6Im1pbGFuQG1pbGFuam92YW5vdmljLnRlY2giLCJnaXZlbl9uYW1lIjoiTWlsYW4iLCJmYW1pbHlfbmFtZSI6IkpvdmFub3ZpYyIsImVtYWlsIjoibWlsYW5AbWlsYW5qb3Zhbm92aWMudGVjaCJ9.gJg_rUuWdzAh1J-93P-o20aMgsdQ2ksqB_UFxOIzoB5uTikGrNcgsdQSJUwtTu1FUhmzE8zZwSua1KfrP6Nh22Kn9_faEPqCw4b6P82JO2hC76YEofSSYkWdTMM87APg_ohgAAUqScF0mnRhwOytKFgwvX3rksdsBfSHLQdis4QyKkehhBDZ4RU3aHJteOc1EC1nk_4FjCpJxV-7p2PPYF_dOEg_DLXr09pIOdPuSswybPxcage5CsBOCLI5s04eBTM9Y7PSVcwwYjw1uY1n-zQzNj2T66w8Byh827CfetdxdbDu3sIcSdTkfcpVV-4Oj3-WGzpqLEYjIds4vXZusQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apartmentId\": \"82cbdb9e-03cb-421b-a734-8e1c2931a0c8\",\r\n    \"userId\": \"3a82627c-53ff-4c83-9d04-5be96a4678b9\",\r\n    \"startDate\": \"2024-08-20\",\r\n    \"endDate\": \"2024-08-25\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/v1/bookings",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJvbnJVai1RbTVZc2pEdUVvcUZGMTk3NE1PVDNKVFA0Ml94UXpGYUhnTmZrIn0.eyJleHAiOjE3MDQ4MzMxMTEsImlhdCI6MTcwNDgyOTUxMSwianRpIjoiMjk0MWM1MTItNTk1Ny00NjM5LTk0YjUtNzAxNGY2YjEyMzJjIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvYXV0aC9yZWFsbXMvYm9va2lmeSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJkYTUyZjFiMy0zZTQ4LTQ4M2EtODc4NC1kMGNjYzVkZTgyZDQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJib29raWZ5LWF1dGgtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjBhODY5MWYzLWRjYmEtNDJmMC04OWM1LTk2Nzk2NjFkNjFjZCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiIwYTg2OTFmMy1kY2JhLTQyZjAtODljNS05Njc5NjYxZDYxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik1pbGFuIEpvdmFub3ZpYyIsInByZWZlcnJlZF91c2VybmFtZSI6Im1pbGFuQG1pbGFuam92YW5vdmljLnRlY2giLCJnaXZlbl9uYW1lIjoiTWlsYW4iLCJmYW1pbHlfbmFtZSI6IkpvdmFub3ZpYyIsImVtYWlsIjoibWlsYW5AbWlsYW5qb3Zhbm92aWMudGVjaCJ9.gJg_rUuWdzAh1J-93P-o20aMgsdQ2ksqB_UFxOIzoB5uTikGrNcgsdQSJUwtTu1FUhmzE8zZwSua1KfrP6Nh22Kn9_faEPqCw4b6P82JO2hC76YEofSSYkWdTMM87APg_ohgAAUqScF0mnRhwOytKFgwvX3rksdsBfSHLQdis4QyKkehhBDZ4RU3aHJteOc1EC1nk_4FjCpJxV-7p2PPYF_dOEg_DLXr09pIOdPuSswybPxcage5CsBOCLI5s04eBTM9Y7PSVcwwYjw1uY1n-zQzNj2T66w8Byh827CfetdxdbDu3sIcSdTkfcpVV-4Oj3-WGzpqLEYjIds4vXZusQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/v1/bookings/ad4e3a15-d3bb-478e-a518-6a4f6f1d17ae",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bookings",
+								"ad4e3a15-d3bb-478e-a518-6a4f6f1d17ae"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Log in User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"milan@milanjovanovic.tech\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/v1/users/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"milan@milanjovanovic.tech\",\r\n    \"firstName\": \"Milan\",\r\n    \"lastName\": \"Jovanovic\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/v1/users/register",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logged In User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJvbnJVai1RbTVZc2pEdUVvcUZGMTk3NE1PVDNKVFA0Ml94UXpGYUhnTmZrIn0.eyJleHAiOjE3MDQ4MjUxNDMsImlhdCI6MTcwNDgyMTU0MywianRpIjoiZDNlYmM4OWUtZWU1OC00ZDYxLTk4NjMtYWNjNjEzZDYyN2JkIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvYXV0aC9yZWFsbXMvYm9va2lmeSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJkYTUyZjFiMy0zZTQ4LTQ4M2EtODc4NC1kMGNjYzVkZTgyZDQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJib29raWZ5LWF1dGgtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImM0MjIxODNiLTVjMWYtNGU1Ni1hZDBkLThiNzZkOGU1ODc5OCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJjNDIyMTgzYi01YzFmLTRlNTYtYWQwZC04Yjc2ZDhlNTg3OTgiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik1pbGFuIEpvdmFub3ZpYyIsInByZWZlcnJlZF91c2VybmFtZSI6Im1pbGFuQG1pbGFuam92YW5vdmljLnRlY2giLCJnaXZlbl9uYW1lIjoiTWlsYW4iLCJmYW1pbHlfbmFtZSI6IkpvdmFub3ZpYyIsImVtYWlsIjoibWlsYW5AbWlsYW5qb3Zhbm92aWMudGVjaCJ9.qzmU0eVnw-oMJJ6ufg0iYyqg28OyQGbn18raUZEy1SC7MdI_s9W1JnyJsk5qCkHompzZ6ZCOVPngaQ2N0WDc9Y5wRO-cqu7wfMoMkn_ep3I37iLTLskaAOZo9I_IODFOoFTY2vbX0gqYaoQk7_GhYrydoOCya1c3lUt4RpF0b3bO0wdvcNW97B-mkEfuG8TZk0HSeqeDul-jhG2sU0b-r62RTDnSf437HBC7QOinABmTsKX5m4U5BWsmrKxA4kzWKIP6ANS6UIq5iAgVPYECvGRMotamT1rIeOrdsEkCuSAPAAv0sLiGjHnPZCO1AhP7SKVMpvT1qZS0j_Ls1tH4Ow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/v1/users/me",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Access Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "bookify-auth-client",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "3E3yvXaYppoYBF3Ir6DgtEzADKKzSurZ",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:18080/realms/bookify/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "18080",
+							"path": [
+								"realms",
+								"bookify",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Token Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "bookify-admin-client",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "UZDmbNxWmV4TlpaCRcju6pMRsyuV3er1",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:18080/realms/bookify/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "18080",
+							"path": [
+								"realms",
+								"bookify",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:18080/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "18080",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/health",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

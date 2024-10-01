@@ -1,6 +1,6 @@
 services:
   bookify.api:
-    image: ${DOCKER_REGISTRY-}bookify-api
+    image: ${DOCKER_REGISTRY-}bookify-api      # Custom API service, version managed via Docker registry
     container_name: bookify.api
     build:
       context: .
@@ -13,14 +13,14 @@ services:
         condition: service_healthy
 
   bookify.db:
-    image: postgres:latest
+    image: postgres:latest                     # Postgres 16.2 (latest at time of setup)
     container_name: bookify.database
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=bookify
     volumes:
-      - ./.containers/bookify-db:/var/lib/postgresql/data
+      - ./.containers/database:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
@@ -29,3 +29,19 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+  
+  bookify.idp:
+    image: quay.io/keycloak/keycloak:latest    # Keycloak 25.0.6 (latest version used)
+    container_name: bookify.identity
+    environment:
+      - KC_HEALTH_ENABLED=true
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "18080:8080"
+    volumes:
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files/keycloak/bookify-realm-export.json:/opt/keycloak/data/import/bookify-realm-export.json
+    command:
+      - start-dev
+      - --import-realm
