@@ -19,17 +19,19 @@ internal sealed class AuthenticationService : IAuthenticationService
     {
         var userRepresentationModel = UserRepresentationModel.FromUser(user);
 
-        userRepresentationModel.Credentials = new CredentialRepresentationModel[]
-        {
-            new()
+        userRepresentationModel.Credentials =
+        [
+            new CredentialRepresentationModel
             {
                 Value = password,
                 Temporary = false,
                 Type = PasswordCredentialType
             }
-        };
+        ];
         
         var response = await _httpClient.PostAsJsonAsync("users", userRepresentationModel, cancellationToken);
+        
+        response.EnsureSuccessStatusCode();
 
         return ExtractIdentityIdFromLocationHeader(response);
     }

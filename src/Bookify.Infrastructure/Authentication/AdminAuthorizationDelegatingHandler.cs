@@ -35,11 +35,11 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
             new("grant_type", "client_credentials")
         };
         
-        var authorizationRequestContext = new FormUrlEncodedContent(authorizationRequestParameters);
+        var authorizationRequestContent = new FormUrlEncodedContent(authorizationRequestParameters);
         
         var authorizationRequest = new HttpRequestMessage(HttpMethod.Post, new Uri(_keycloakOptions.TokenUrl))
         {
-            Content = authorizationRequestContext
+            Content = authorizationRequestContent
         };
         
         var authorizationResponse = await base.SendAsync(authorizationRequest, cancellationToken);

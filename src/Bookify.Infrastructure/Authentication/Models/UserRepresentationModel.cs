@@ -8,7 +8,7 @@ public sealed class UserRepresentationModel
     public Dictionary<string, List<string>> Attributes { get; set; }
     public Dictionary<string, string> ClientRoles { get; set; }
     public long? CreatedTimestamp { get; set; }
-    public CredentialRepresentationModel[]? Credentials { get; set; }
+    public CredentialRepresentationModel[] Credentials { get; set; }
     public string[] DisableableCredentialTypes { get; set; }
     public string Email { get; set; }
     public bool? EmailVerified { get; set; }
@@ -18,7 +18,7 @@ public sealed class UserRepresentationModel
     public string[] Groups { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public int? NoBefore { get; set; }
+    public int? NotBefore { get; set; }
     public string Origin { get; set; }
     public string[] RealmRoles { get; set; }
     public string[] RequiredActions { get; set; }
@@ -34,8 +34,10 @@ public sealed class UserRepresentationModel
             Email = user.Email.Value,
             Username = user.Email.Value,
             Enabled = true,
+            EmailVerified = true,
             CreatedTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
             Attributes = new Dictionary<string, List<string>>(),
-            RequiredActions = []
+            RequiredActions = [],
+            Groups = [],
         };
 }
