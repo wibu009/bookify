@@ -44,9 +44,13 @@ public static class DependencyInjection
         services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
         {
             var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
-
             httpClient.BaseAddress = new Uri(keycloakOptions.AdminUrl);
         }).AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
+        {
+            var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
+        });
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

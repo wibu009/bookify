@@ -5,7 +5,7 @@ using Bookify.Infrastructure.Authentication.Models;
 
 namespace Bookify.Infrastructure.Authentication;
 
-public class AuthenticationService : IAuthenticationService
+internal sealed class AuthenticationService : IAuthenticationService
 {
     private const string PasswordCredentialType = "password";
     private readonly HttpClient _httpClient;

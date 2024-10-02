@@ -2,7 +2,7 @@
 
 namespace Bookify.Application.Users.RegisterUser;
 
-public record RegisterUserCommand(
+public sealed record RegisterUserCommand(
     string Email,
     string FirstName,
     string LastName,
