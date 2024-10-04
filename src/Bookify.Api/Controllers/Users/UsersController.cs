@@ -15,9 +15,9 @@ public class UsersController(ISender sender) : ControllerBase
     public async Task<IActionResult> RegisterUser(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         var command = new RegisterUserCommand(
+            request.Email,
             request.FirstName,
             request.LastName,
-            request.Email,
             request.Password);
         var result = await sender.Send(command, cancellationToken);
         if (result.IsFailure) return BadRequest(result.Error);

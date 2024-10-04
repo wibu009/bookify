@@ -2,7 +2,7 @@
 
 namespace Bookify.Infrastructure.Authentication.Models;
 
-public sealed class AuthorizationToken
+public sealed class AuthorizationTokenModel
 {
     [JsonPropertyName("access_token")]
     public string AccessToken { get; init; } = string.Empty;

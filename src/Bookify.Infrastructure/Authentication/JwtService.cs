@@ -39,7 +39,7 @@ internal sealed class JwtService : IJwtService
             var response = await _httpClient.PostAsync("", authorizationRequestContext, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            var authorizationToken = await response.Content.ReadFromJsonAsync<AuthorizationToken>(cancellationToken: cancellationToken);
+            var authorizationToken = await response.Content.ReadFromJsonAsync<AuthorizationTokenModel>(cancellationToken: cancellationToken);
             if (authorizationToken is null)
                 return Result.Failure<string>(AuthenticationError);
             

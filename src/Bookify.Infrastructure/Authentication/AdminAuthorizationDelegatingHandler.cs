@@ -20,12 +20,13 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
         request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, authorizationToken.AccessToken);
         
         var httpResponseMessage = await base.SendAsync(request, cancellationToken);
+        var read = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
         httpResponseMessage.EnsureSuccessStatusCode();
         
         return httpResponseMessage;
     }
 
-    private async Task<AuthorizationToken> GetAuthorizationToken(CancellationToken cancellationToken)
+    private async Task<AuthorizationTokenModel> GetAuthorizationToken(CancellationToken cancellationToken)
     {
         var authorizationRequestParameters = new KeyValuePair<string, string>[]
         {
@@ -46,7 +47,7 @@ public sealed class AdminAuthorizationDelegatingHandler : DelegatingHandler
         
         authorizationResponse.EnsureSuccessStatusCode();
 
-        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationToken>(
+        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationTokenModel>(
             cancellationToken: cancellationToken) ?? throw new ApplicationException();
     }
 }
