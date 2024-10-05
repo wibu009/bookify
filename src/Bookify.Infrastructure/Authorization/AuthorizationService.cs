@@ -25,4 +25,25 @@ internal sealed class AuthorizationService
         
         return roles;
     }
+
+    public async Task<HashSet<string>> GetPermissionsForUserAsync(string identityId, CancellationToken cancellationToken = default)
+    {
+        var user = await _dbContext.Set<User>()
+            .Include(u => u.Roles)
+            .ThenInclude(r => r.Permissions)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(u => u.IdentityId == identityId, cancellationToken);
+        
+        if (user == null)
+        {
+            return [];
+        }
+        
+        var permissions = user.Roles
+            .SelectMany(r => r.Permissions)
+            .Select(p => p.Name)
+            .ToHashSet();
+
+        return permissions;
+    }
 }

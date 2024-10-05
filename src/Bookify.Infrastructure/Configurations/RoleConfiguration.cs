@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Bookify.Infrastructure.Configurations;
 
-internal sealed class RoleConfigurations : IEntityTypeConfiguration<Role>
+internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
@@ -13,6 +13,7 @@ internal sealed class RoleConfigurations : IEntityTypeConfiguration<Role>
         builder.HasKey(role => role.Id);
         builder.HasMany(role => role.Users)
             .WithMany(user => user.Roles);
+        
         builder.HasData(Role.Registered);
     }
 }
