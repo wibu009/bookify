@@ -1,5 +1,6 @@
 ﻿using Bookify.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Bookify.Infrastructure.Repositories;
 
@@ -18,7 +19,7 @@ internal abstract class Repository<T>
         return await DbContext.Set<T>().FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
     
-    public void Add(T entity)
+    public virtual void Add(T entity)
     {
         DbContext.Set<T>().Add(entity);
     }

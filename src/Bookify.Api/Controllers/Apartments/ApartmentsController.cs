@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.Api.Controllers.Apartments;
 
-[Authorize]
-[ApiController]
-[Route("api/apartments")]
+[ApiController, Route("api/apartments"), Authorize]
 public class ApartmentsController(ISender sender) : ControllerBase
 {
     [HttpGet]
