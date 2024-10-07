@@ -35,9 +35,9 @@ internal sealed class GetBookingQueryHandler(ISqlConnectionFactory sqlConnection
                             """;
         var booking = await connection.QueryFirstOrDefaultAsync<BookingResponse>(
             sql,
-            new BookingResponse()
+            new
             {
-                Id = request.BookingId
+                request.BookingId
             }
         );
 

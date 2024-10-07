@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Bookify.Domain.Abstractions;
 
 public class Result
 {
+    [JsonConstructor]
     protected internal Result(bool isSuccess, Error error)
     {
         if (isSuccess && error != Error.None)
@@ -31,6 +33,7 @@ public class Result<TValue> : Result
 {
     private readonly TValue? _value;
     
+    [JsonConstructor]
     protected internal Result(TValue value, bool isSuccess, Error error) : base(isSuccess, error)
     {
         _value = value;
