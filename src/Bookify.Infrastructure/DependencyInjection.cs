@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Abstractions.Authentication;
+﻿using Asp.Versioning;
+using Bookify.Application.Abstractions.Authentication;
 using Bookify.Application.Abstractions.Caching;
 using Bookify.Application.Abstractions.Clock;
 using Bookify.Application.Abstractions.Data;
@@ -39,8 +40,35 @@ public static class DependencyInjection
         AddAuthentication(services, configuration);
         AddAuthorization(services);
         AddCaching(services, configuration);
+        AddHealthChecks(services, configuration);
+        AddApiVersioning(services);
 
         return services;
+    }
+    
+    private static void AddApiVersioning(IServiceCollection services)
+    {
+        services
+            .AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
+    }
+
+    private static void AddHealthChecks(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHealthChecks()
+            .AddNpgSql(configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentNullException(nameof(configuration)), tags: ["database"], name: "postgres")
+            .AddRedis(configuration.GetConnectionString("Cache") ?? throw new ArgumentNullException(nameof(configuration)), tags: ["redis"], name: "redis")
+            .AddUrlGroup(new Uri(configuration.GetSection("Keycloak:BaseUrl").Value ?? throw new ArgumentNullException(nameof(configuration))), name: "Keycloak", tags: ["keycloak"], httpMethod: HttpMethod.Get);
     }
     
     private static void AddCaching(IServiceCollection services, IConfiguration configuration)
@@ -52,7 +80,7 @@ public static class DependencyInjection
         {
             options.Configuration = connectionString;
         });
-        services.AddKeyedSingleton<ICacheService, DistributedCacheService>("distributed");
+        services.AddSingleton<ICacheService, DistributedCacheService>();
     }
     
     private static void AddAuthorization(IServiceCollection services)

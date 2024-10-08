@@ -12,7 +12,7 @@ internal sealed class AuthorizationService
 
     public AuthorizationService(
         ApplicationDbContext dbContext,
-        [FromKeyedServices("distributed")] ICacheService cacheService)
+        ICacheService cacheService)
     {
         _dbContext = dbContext;
         _cacheService = cacheService;
