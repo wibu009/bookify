@@ -1,5 +1,5 @@
-﻿using Bookify.Application.Abstractions.Clock;
-using Bookify.Application.Abstractions.Messaging;
+﻿using Bookify.Application.Abstractions.Messaging;
+using Bookify.Application.Abstractions.Time;
 using Bookify.Domain.Bookings.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;

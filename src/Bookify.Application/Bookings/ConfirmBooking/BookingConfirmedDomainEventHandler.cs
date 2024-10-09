@@ -1,6 +1,6 @@
-﻿using Bookify.Application.Abstractions.Clock;
-using Bookify.Application.Abstractions.Email;
+﻿using Bookify.Application.Abstractions.Email;
 using Bookify.Application.Abstractions.Messaging;
+using Bookify.Application.Abstractions.Time;
 using Bookify.Domain.Bookings;
 using Bookify.Domain.Bookings.Events;
 using MediatR;
