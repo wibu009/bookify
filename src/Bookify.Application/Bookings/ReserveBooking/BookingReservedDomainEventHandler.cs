@@ -1,4 +1,5 @@
 ﻿using Bookify.Application.Abstractions.Email;
+using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Bookings;
 using Bookify.Domain.Bookings.Events;
 using Bookify.Domain.Users;
