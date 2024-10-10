@@ -2,4 +2,4 @@
 
 namespace Bookify.Application.Bookings.CancelBooking;
 
-public record CancelBookingCommand(Guid BookingId) : ICommand<Guid>;
+public record CancelBookingCommand(Guid BookingId) : ICommand;

@@ -1,4 +1,5 @@
 using Bookify.Domain.Abstractions;
+using Bookify.Domain.Apartments.Events;
 using Bookify.Domain.Shared;
 
 namespace Bookify.Domain.Apartments;
@@ -32,4 +33,29 @@ public sealed class Apartment : Entity
     public Money CleaningFee { get; private set; }
     public DateTime? LastBookedOnUtc { get; internal set; }
     public List<Amenity> Amenities { get; private set; }
+    
+    public static Result<Apartment> Create(
+        Name name,
+        Description description,
+        Address address,
+        Money price,
+        Money cleaningFee,
+        List<Amenity> amenities
+    )
+    {
+        var apartment = new Apartment
+        (
+            Guid.NewGuid(),
+            name,
+            description,
+            address,
+            price,
+            cleaningFee,
+            amenities
+        );
+        
+        apartment.RaiseDomainEvent(new ApartmentCreatedDomainEvent(apartment.Id));
+        
+        return Result.Success(apartment);
+    }
 }

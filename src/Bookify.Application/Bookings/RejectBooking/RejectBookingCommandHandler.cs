@@ -9,23 +9,23 @@ internal sealed class RejectBookingCommandHandler(
     IBookingRepository bookingRepository,
     IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
-    : ICommandHandler<RejectBookingCommand, Guid>
+    : ICommandHandler<RejectBookingCommand>
 {
-    public async Task<Result<Guid>> Handle(RejectBookingCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RejectBookingCommand request, CancellationToken cancellationToken)
     {
         var booking = await bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
         if (booking is null)
         {
-            return Result.Failure<Guid>(BookingErrors.NotFound);
+            return Result.Failure(BookingErrors.NotFound);
         }
         
         var result = booking.Reject(dateTimeProvider.UtcNow);
         if (result.IsFailure)
         {
-            return Result.Failure<Guid>(result.Error);
+            return Result.Failure(result.Error);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return booking.Id;
+        return Result.Success();
     }
 }

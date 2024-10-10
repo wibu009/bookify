@@ -2,4 +2,4 @@
 
 namespace Bookify.Application.Bookings.ConfirmBooking;
 
-public record ConfirmBookingCommand(Guid BookingId) : ICommand<Guid>;
+public record ConfirmBookingCommand(Guid BookingId) : ICommand;

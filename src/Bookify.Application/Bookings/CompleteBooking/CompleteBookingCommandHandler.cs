@@ -10,23 +10,23 @@ internal sealed class CompleteBookingCommandHandler(
     IBookingRepository bookingRepository,
     IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
-    : ICommandHandler<CompleteBookingCommand, Guid>
+    : ICommandHandler<CompleteBookingCommand>
 {
-    public async Task<Result<Guid>> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
     {
         var booking = await bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
         if (booking is null)
         {
-            return Result.Failure<Guid>(BookingErrors.NotFound);
+            return Result.Failure(BookingErrors.NotFound);
         }
         
         var result = booking.Complete(dateTimeProvider.UtcNow);
         if (result.IsFailure)
         {
-            return Result.Failure<Guid>(result.Error);
+            return Result.Failure(result.Error);
         }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return booking.Id;
+        return Result.Success();
     }
 }

@@ -19,7 +19,7 @@ public class BookingsController(ISender sender) : ControllerBase
     {
         var query = new GetBookingQuery(id);
         var result = await sender.Send(query, cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : NotFound();
+        return result.IsFailure ? NotFound() : Ok(result.Value);
     }
 
     [HttpPost]
@@ -33,12 +33,9 @@ public class BookingsController(ISender sender) : ControllerBase
             request.StartDate,
             request.EndDate);
         var result = await sender.Send(command, cancellationToken);
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-
-        return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
+        return result.IsFailure
+            ? BadRequest(result.Error)
+            : CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
     }
     
     [HttpPut("{id:guid}/cancel")]
@@ -46,11 +43,7 @@ public class BookingsController(ISender sender) : ControllerBase
     {
         var command = new CancelBookingCommand(id);
         var result = await sender.Send(command, cancellationToken);
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-        return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
+        return result.IsFailure ? BadRequest(result.Error) : NoContent();
     }
     
     [HttpPut("{id:guid}/reject")]
@@ -58,11 +51,7 @@ public class BookingsController(ISender sender) : ControllerBase
     {
         var command = new RejectBookingCommand(id);
         var result = await sender.Send(command, cancellationToken);
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-        return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
+        return result.IsFailure ? BadRequest(result.Error) : NoContent();
     }
     
     [HttpPut("{id:guid}/confirm")]
@@ -70,11 +59,7 @@ public class BookingsController(ISender sender) : ControllerBase
     {
         var command = new ConfirmBookingCommand(id);
         var result = await sender.Send(command, cancellationToken);
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-        return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
+        return result.IsFailure ? BadRequest(result.Error) : NoContent();
     }
     
     [HttpPut("{id:guid}/complete")]
@@ -82,10 +67,6 @@ public class BookingsController(ISender sender) : ControllerBase
     {
         var command = new CompleteBookingCommand(id);
         var result = await sender.Send(command, cancellationToken);
-        if (result.IsFailure)
-        {
-            return BadRequest(result.Error);
-        }
-        return CreatedAtAction(nameof(GetBooking), new { id = result.Value }, result.Value);
+        return result.IsFailure ? BadRequest(result.Error) : NoContent();
     }
 }
