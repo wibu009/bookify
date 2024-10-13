@@ -18,7 +18,7 @@ public class PricingService
             _ => 0
         });
 
-        var amenitiesUpCharge = Money.Zero();
+        var amenitiesUpCharge = Money.Zero(currency);
         if (percentageUpCharge > 0)
         {
             amenitiesUpCharge = new Money(priceForPeriod.Amount * percentageUpCharge, currency);
