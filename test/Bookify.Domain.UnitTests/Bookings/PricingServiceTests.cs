@@ -11,10 +11,9 @@ public class PricingServiceTests
     {
         // Arrange
         var price = new Money(10.0m, Currency.Usd);
-        var period = DateRange.Create(
-            new DateOnly(2024, 1, 1),
-            new DateOnly(2024, 1, 10));
-        var expectedTotalPrice = new Money(price.Amount * period.LengthInDays, price.Currency);
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var period = DateRange.Create(today, today.AddDays(9));
+        var expectedTotalPrice = price with { Amount = price.Amount * period.LengthInDays };
         var apartment = ApartmentData.Create(price);
         var pricingService = new PricingService();
 
