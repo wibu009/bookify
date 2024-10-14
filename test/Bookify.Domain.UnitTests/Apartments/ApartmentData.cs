@@ -5,12 +5,11 @@ namespace Bookify.Domain.UnitTests.Apartments;
 
 public static class ApartmentData
 {
-    public static Apartment Create(Money price, Money? cleaningFee = null) => new(
-        Guid.NewGuid(),
+    public static Apartment Create(Money price, Money? cleaningFee = null) => Apartment.Create(
         new Name("Test Apartment"),
         new Description("Test Description"),
         new Address("Country", "State", "ZipCode", "City", "Street"),
         price,
         cleaningFee ?? Money.Zero(),
-        []);
+        []).Value;
 }
