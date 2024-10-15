@@ -21,7 +21,7 @@ internal sealed class CreateApartmentCommandHandler(
         var price = new Money(request.Price, Currency.FromCode(request.Currency));
         var cleaningFee = new Money(request.CleaningFee, Currency.FromCode(request.Currency));
         var amenities = request.Amenities.Select(amenity => (Amenity)amenity).ToList();
-        var apartmentResult = Apartment.Create(
+        var apartment = Apartment.Create(
             new Name(request.Name),
             new Description(request.Description),
             address,
@@ -29,9 +29,9 @@ internal sealed class CreateApartmentCommandHandler(
             cleaningFee,
             amenities);
         
-        apartmentRepository.Add(apartmentResult.Value);
+        apartmentRepository.Add(apartment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        return apartmentResult.IsFailure ? Result.Failure<Guid>(apartmentResult.Error) : apartmentResult.Value.Id;
+        return apartment.Id;
     }
 }

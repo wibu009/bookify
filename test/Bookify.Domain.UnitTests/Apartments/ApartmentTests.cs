@@ -10,7 +10,7 @@ public class ApartmentTests : BaseTest
     public void Create_Should_SetPropertyValues()
     {
         // Act
-        var result = Apartment.Create(
+        var apartment = Apartment.Create(
             ApartmentData.Name,
             ApartmentData.Description,
             ApartmentData.Address,
@@ -19,8 +19,6 @@ public class ApartmentTests : BaseTest
             ApartmentData.Amenities);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
-        var apartment = result.Value;
         apartment.Name.Should().Be(ApartmentData.Name);
         apartment.Description.Should().Be(ApartmentData.Description);
         apartment.Address.Should().Be(ApartmentData.Address);
@@ -33,7 +31,7 @@ public class ApartmentTests : BaseTest
     public void Create_Should_RaiseApartmentCreatedDomainEvent()
     {
         // Act
-        var result = Apartment.Create(
+        var apartment = Apartment.Create(
             ApartmentData.Name,
             ApartmentData.Description,
             ApartmentData.Address,
@@ -42,8 +40,6 @@ public class ApartmentTests : BaseTest
             ApartmentData.Amenities);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
-        var apartment = result.Value;
         var domainEvent = AssertDomainEventWasPublished<ApartmentCreatedDomainEvent>(apartment);
         domainEvent.ApartmentId.Should().Be(apartment.Id);
     }

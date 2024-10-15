@@ -12,7 +12,7 @@ namespace Bookify.Domain.UnitTests.Reviews;
 public class ReviewTests : BaseTest
 {
     [Fact]
-    public void Create_Should_SetReviewPropertyValues_When_BookingIsCompleted()
+    public void Create_Should_SetReviewPropertyValues_WhenBookingIsCompleted()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -44,7 +44,7 @@ public class ReviewTests : BaseTest
     }
     
     [Fact]
-    public void Create_Should_RaiseReviewCreatedDomainEvent_When_BookingIsCompleted()
+    public void Create_Should_RaiseReviewCreatedDomainEvent_WhenBookingIsCompleted()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -70,7 +70,7 @@ public class ReviewTests : BaseTest
     }
     
     [Fact]
-    public void Create_Should_ReturnFailure_When_BookingIsNotCompleted()
+    public void Create_Should_ReturnFailure_WhenBookingIsNotCompleted()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);

@@ -30,7 +30,7 @@ public class BookingTests : BaseTest
     }
     
     [Fact]
-    public void Confirm_Should_ChangeStatusToConfirmed_And_RaiseBookingConfirmedDomainEvent()
+    public void Confirm_Should_ChangeStatusToConfirmed_AndRaiseBookingConfirmedDomainEvent()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -53,7 +53,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Confirm_Should_ReturnFailure_When_StatusIsNotReserved()
+    public void Confirm_Should_ReturnFailure_WhenStatusIsNotReserved()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -75,7 +75,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Reject_Should_ChangeStatusToRejected_And_RaiseBookingRejectedDomainEvent()
+    public void Reject_Should_ChangeStatusToRejected_AndRaiseBookingRejectedDomainEvent()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -98,7 +98,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Reject_Should_ReturnFailure_When_StatusIsNotReserved()
+    public void Reject_Should_ReturnFailure_WhenStatusIsNotReserved()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -120,7 +120,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Complete_Should_ChangeStatusToCompleted_And_RaiseBookingCompletedDomainEvent()
+    public void Complete_Should_ChangeStatusToCompleted_AndRaiseBookingCompletedDomainEvent()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -144,7 +144,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Complete_Should_ReturnFailure_When_StatusIsNotConfirmed()
+    public void Complete_Should_ReturnFailure_WhenStatusIsNotConfirmed()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -164,7 +164,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Cancel_Should_ChangeStatusToCancelled_And_RaiseBookingCancelledDomainEvent()
+    public void Cancel_Should_ChangeStatusToCancelled_AndRaiseBookingCancelledDomainEvent()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
@@ -188,7 +188,7 @@ public class BookingTests : BaseTest
     }
 
     [Fact]
-    public void Cancel_Should_ReturnFailure_When_BookingHasAlreadyStarted()
+    public void Cancel_Should_ReturnFailure_WhenBookingHasAlreadyStarted()
     {
         // Arrange
         var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);

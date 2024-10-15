@@ -34,7 +34,7 @@ public sealed class Apartment : Entity
     public DateTime? LastBookedOnUtc { get; internal set; }
     public List<Amenity> Amenities { get; private set; }
     
-    public static Result<Apartment> Create(
+    public static Apartment Create(
         Name name,
         Description description,
         Address address,
@@ -56,6 +56,6 @@ public sealed class Apartment : Entity
         
         apartment.RaiseDomainEvent(new ApartmentCreatedDomainEvent(apartment.Id));
         
-        return Result.Success(apartment);
+        return apartment;
     }
 }
