@@ -24,5 +24,9 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
       <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.0" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="Bookify.Application.IntegrationTests" />
+    </ItemGroup>
 
 </Project>
