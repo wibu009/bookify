@@ -12,23 +12,19 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (validators.Any())
-        {
-            return await next();
-        }
+        if (!validators.Any()) return await next();
         
         var context = new ValidationContext<TRequest>(request);
         var validationErrors = validators
-            .Select(v => v.Validate(context))
-            .Where(vr => vr.Errors.Count != 0)
-            .SelectMany(vr => vr.Errors)
-            .Select(vf => new ValidationError(vf.PropertyName, vf.ErrorMessage))
+            .Select(validator => validator.Validate(context))
+            .Where(validationResult => validationResult.Errors.Any())
+            .SelectMany(validationResult => validationResult.Errors)
+            .Select(validationFailure => new ValidationError(
+                validationFailure.PropertyName,
+                validationFailure.ErrorMessage))
             .ToList();
         
-        if (validationErrors.Any())
-        {
-            throw new Exceptions.ValidationException(validationErrors);
-        }
+        if (validationErrors.Any()) throw new Exceptions.ValidationException(validationErrors);
         
         return await next();
     }

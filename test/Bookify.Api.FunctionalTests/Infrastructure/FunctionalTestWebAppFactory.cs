@@ -1,4 +1,6 @@
-﻿using Bookify.Application.Abstractions.Data;
+﻿using System.Net.Http.Json;
+using Bookify.Api.FunctionalTests.Users;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Infrastructure;
 using Bookify.Infrastructure.Authentication;
 using Bookify.Infrastructure.Data;
@@ -9,13 +11,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Testcontainers.Keycloak;
 using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 
-namespace Bookify.Application.IntegrationTests.Infrastructure;
+namespace Bookify.Api.FunctionalTests.Infrastructure;
 
-public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithImage("postgres:latest")
@@ -59,6 +62,11 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
                 options.AdminUrl = $"{keycloakAddress}/admin/realms/bookify/";
                 options.TokenUrl = $"{keycloakAddress}/realms/bookify/protocol/openid-connect/token";
             });
+            services.Configure<AuthenticationOptions>(options =>
+            {
+                options.Issuer = $"{keycloakAddress}realms/bookify/";
+                options.MetadataUrl = $"{keycloakAddress}realms/bookify/.well-known/openid-configuration";
+            });
         });
     }
 
@@ -67,6 +75,8 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         await _dbContainer.StartAsync();
         await _redisContainer.StartAsync();
         await _keycloakContainer.StartAsync();
+        
+        await InitializeTestUsersAsync();
     }
 
     public async Task DisposeAsync()
@@ -74,5 +84,12 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         await _keycloakContainer.StopAsync();
         await _redisContainer.StopAsync();
         await _dbContainer.StopAsync();
+    }
+
+    private async Task InitializeTestUsersAsync()
+    {
+        var httpClient = CreateClient();
+        
+        await httpClient.PostAsJsonAsync("api/v1/users/register", UserData.RegisterTestUserRequest);
     }
 }
