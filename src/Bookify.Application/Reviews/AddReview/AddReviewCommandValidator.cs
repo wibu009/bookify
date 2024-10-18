@@ -2,7 +2,7 @@
 
 namespace Bookify.Application.Reviews.AddReview;
 
-public class AddReviewCommandValidator : AbstractValidator<AddReviewCommand>
+public sealed class AddReviewCommandValidator : AbstractValidator<AddReviewCommand>
 {
     public AddReviewCommandValidator()
     {

@@ -2,7 +2,7 @@
 
 namespace Bookify.Application.Bookings.CancelBooking;
 
-public class CancelBookingCommandValidator : AbstractValidator<CancelBookingCommand>
+public sealed class CancelBookingCommandValidator : AbstractValidator<CancelBookingCommand>
 {
     public CancelBookingCommandValidator()
     {

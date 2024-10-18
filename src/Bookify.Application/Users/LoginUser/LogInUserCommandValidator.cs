@@ -2,7 +2,7 @@
 
 namespace Bookify.Application.Users.LoginUser;
 
-public class LogInUserCommandValidator : AbstractValidator<LogInUserCommand>
+public sealed class LogInUserCommandValidator : AbstractValidator<LogInUserCommand>
 {
     public LogInUserCommandValidator()
     {

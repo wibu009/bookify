@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Bookify.Application.Apartments.CreateApartment;
 
-public class CreateApartmentCommandValidator : AbstractValidator<CreateApartmentCommand>
+public sealed class CreateApartmentCommandValidator : AbstractValidator<CreateApartmentCommand>
 {
     public CreateApartmentCommandValidator()
     {

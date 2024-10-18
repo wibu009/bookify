@@ -2,4 +2,4 @@
 
 namespace Bookify.Domain.Apartments.Events;
 
-public record ApartmentCreatedDomainEvent(Guid ApartmentId) : IDomainEvent;
+public sealed record ApartmentCreatedDomainEvent(Guid ApartmentId) : IDomainEvent;

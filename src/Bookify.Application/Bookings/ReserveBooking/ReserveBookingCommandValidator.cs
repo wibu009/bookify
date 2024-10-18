@@ -2,7 +2,7 @@
 
 namespace Bookify.Application.Bookings.ReserveBooking;
 
-public class ReserveBookingCommandValidator : AbstractValidator<ReserveBookingCommand>
+public sealed class ReserveBookingCommandValidator : AbstractValidator<ReserveBookingCommand>
 {
     public ReserveBookingCommandValidator()
     {
