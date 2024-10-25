@@ -27,8 +27,6 @@ public sealed class User : Entity
         
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
         
-        user._roles.Add(Role.Registered);
-        
         return user;
     }
 

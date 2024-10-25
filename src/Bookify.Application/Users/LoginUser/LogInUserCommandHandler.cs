@@ -2,6 +2,7 @@
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Users;
+using Bookify.Shared.Core;
 
 namespace Bookify.Application.Users.LoginUser;
 

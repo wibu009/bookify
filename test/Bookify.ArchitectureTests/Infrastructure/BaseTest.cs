@@ -2,6 +2,7 @@
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure;
+using Bookify.Infrastructure.Data;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace Bookify.ArchitectureTests.Infrastructure;

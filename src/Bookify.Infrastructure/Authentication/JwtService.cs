@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using Bookify.Application.Abstractions.Authentication;
-using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Authentication.Models;
+using Bookify.Shared.Core;
 using Microsoft.Extensions.Options;
 
 namespace Bookify.Infrastructure.Authentication;

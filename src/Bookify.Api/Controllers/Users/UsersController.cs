@@ -12,7 +12,7 @@ namespace Bookify.Api.Controllers.Users;
 [ApiController, ApiVersion(ApiVersions.V1), Route("api/v{version:apiVersion}/users")]
 public class UsersController(ISender sender) : ControllerBase
 {
-    [HttpGet("me"), HasPermission(Permissions.UsersRead)]
+    [HttpGet("me")]
     public async Task<IActionResult> GetLoggedInUser(CancellationToken cancellationToken)
     {
         var query = new GetLoggedInUserQuery();

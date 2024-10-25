@@ -1,5 +1,6 @@
 ﻿using Bookify.Application.Abstractions.Caching;
 using Bookify.Domain.Users;
+using Bookify.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

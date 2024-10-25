@@ -1,4 +1,6 @@
-﻿namespace Bookify.Application.Exceptions;
+﻿using Bookify.Shared.Core;
+
+namespace Bookify.Application.Exceptions;
 
 public sealed class ValidationException(IEnumerable<ValidationError> errors) : Exception
 {
