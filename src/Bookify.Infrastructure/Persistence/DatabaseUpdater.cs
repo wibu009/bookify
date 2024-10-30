@@ -15,18 +15,16 @@ public sealed class DatabaseUpdater(ApplicationDbContext dbContext)
         
         if (await dbContext.Database.CanConnectAsync(cancellationToken: cancellationToken))
         {
-            await UpdateIdentityDataAsync(cancellationToken);
+            await UpdatePermissionsAsync(cancellationToken);
+            await UpdateRolesAsync(cancellationToken);
         }
     }
     
-    private async Task UpdateIdentityDataAsync(CancellationToken cancellationToken = default)
+    private async Task UpdatePermissionsAsync(CancellationToken cancellationToken = default)
     {
         await dbContext.Database.EnsureCreatedAsync(cancellationToken);
 
         var existingPermissions = dbContext.Set<Permission>().ToList();
-        var existingRoles = dbContext.Set<Role>().Include(r => r.Permissions).ToList();
-
-        // Step 1: Add missing permissions
         var permissionsToAdd = Permissions.All
             .Where(p => existingPermissions.All(ep => ep.Name != p))
             .Select((permission, index) => new Permission(index + 1, permission))
@@ -35,9 +33,15 @@ public sealed class DatabaseUpdater(ApplicationDbContext dbContext)
         if (permissionsToAdd.Count > 0)
         {
             dbContext.Set<Permission>().AddRange(permissionsToAdd);
-            existingPermissions.AddRange(permissionsToAdd);
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
-        
+    }
+
+    private async Task UpdateRolesAsync(CancellationToken cancellationToken = default)
+    {
+        var existingPermissions = dbContext.Set<Permission>().ToList();
+        var existingRoles = dbContext.Set<Role>().Include(r => r.Permissions).ToList();
+
         foreach (var roleName in Roles.Default)
         {
             var role = existingRoles.FirstOrDefault(r => r.Name == roleName);
@@ -46,15 +50,16 @@ public sealed class DatabaseUpdater(ApplicationDbContext dbContext)
                 role = new Role(id: existingRoles.Count + 1, name: roleName);
                 dbContext.Set<Role>().Add(role);
                 existingRoles.Add(role);
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
-            
+
             var requiredPermissions = roleName switch
             {
                 Roles.Basic => Permissions.Basic,
                 Roles.Admin => Permissions.Admin,
                 _ => []
             };
-            
+
             var currentPermissionNames = role.Permissions.Select(p => p.Name).ToHashSet();
             var permissionsToAssign = existingPermissions
                 .Where(p => requiredPermissions.Contains(p.Name) && !currentPermissionNames.Contains(p.Name))
@@ -67,9 +72,8 @@ public sealed class DatabaseUpdater(ApplicationDbContext dbContext)
                     role.Permissions.Add(permission);
                 }
                 dbContext.Set<Role>().Update(role);
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
         }
-
-        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -56,7 +56,7 @@ public static class Permissions
     ];
     
     public static readonly string[] Basic = Filter(
-        [Resources.Bookings, Resources.Apartments, Resources.Reviews], 
+        [Resources.Users, Resources.Bookings, Resources.Apartments, Resources.Reviews], 
         [Actions.View, Actions.Search], 
         [Build(Resources.Bookings, Actions.Create),
             Build(Resources.Bookings, Actions.Update),

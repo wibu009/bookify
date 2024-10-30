@@ -68,7 +68,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         await _keycloakContainer.StartAsync();
     }
 
-    public async Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
         await _keycloakContainer.StopAsync();
         await _redisContainer.StopAsync();

@@ -1,6 +1,8 @@
 ﻿using Asp.Versioning;
 using Bookify.Application.Apartments.CreateApartment;
 using Bookify.Application.Apartments.SearchApartments;
+using Bookify.Infrastructure.Authorization;
+using Bookify.Shared.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +12,7 @@ namespace Bookify.Api.Controllers.Apartments;
 [ApiController, ApiVersion(ApiVersions.V1), Route("api/v{version:apiVersion}/apartments"), Authorize]
 public class ApartmentsController(ISender sender) : ControllerBase
 {
-    [HttpGet("search")]
+    [HttpGet("search"), HasPermission(Resources.Apartments, Actions.Search)]
     public async Task<IActionResult> SearchApartments(
         DateOnly startDate,
         DateOnly endDate,
@@ -21,7 +23,7 @@ public class ApartmentsController(ISender sender) : ControllerBase
         return Ok(result.Value);
     }
     
-    [HttpPost]
+    [HttpPost, HasPermission(Resources.Apartments, Actions.Create)]
     public async Task<IActionResult> CreateApartment(CreateApartmentRequest request, CancellationToken cancellationToken)
     {
         var command = new CreateApartmentCommand(

@@ -5,35 +5,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookify.Infrastructure.Authorization;
 
-internal sealed class AuthorizationService
+internal sealed class AuthorizationService(
+    ApplicationDbContext dbContext,
+    ICacheService cacheService)
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly ICacheService _cacheService;
-
-    public AuthorizationService(
-        ApplicationDbContext dbContext,
-        ICacheService cacheService)
-    {
-        _dbContext = dbContext;
-        _cacheService = cacheService;
-    }
-
     public async Task<UserRolesResponse> GetRolesForUserAsync(string identityId,
         CancellationToken cancellationToken = default)
     {
         var cacheKey = $"auth:roles:{identityId}";
         
-        var cachedRoles = await _cacheService.GetAsync<UserRolesResponse>(cacheKey, cancellationToken);
+        var cachedRoles = await cacheService.GetAsync<UserRolesResponse>(cacheKey, cancellationToken);
         if (cachedRoles != null) return cachedRoles;
         
-        var roles = await _dbContext.Set<User>()
+        var roles = await dbContext.Set<User>()
             .Where(user => user.IdentityId == identityId)
             .Select(user => new UserRolesResponse
             {
                 Id = user.Id,
                 Roles = user.Roles.ToList()
             }).FirstAsync(cancellationToken);
-        await _cacheService.SetAsync(cacheKey, roles, cancellationToken: cancellationToken);
+        await cacheService.SetAsync(cacheKey, roles, cancellationToken: cancellationToken);
         
         return roles;
     }
@@ -42,10 +33,10 @@ internal sealed class AuthorizationService
     {
         var cacheKey = $"auth:permissions:{identityId}";
         
-        var cachedPermissions = await _cacheService.GetAsync<HashSet<string>>(cacheKey, cancellationToken);
+        var cachedPermissions = await cacheService.GetAsync<HashSet<string>>(cacheKey, cancellationToken);
         if (cachedPermissions != null) return cachedPermissions;
         
-        var user = await _dbContext.Set<User>()
+        var user = await dbContext.Set<User>()
             .Include(u => u.Roles)
             .ThenInclude(r => r.Permissions)
             .AsSplitQuery()
@@ -58,7 +49,7 @@ internal sealed class AuthorizationService
             .SelectMany(r => r.Permissions)
             .Select(p => p.Name)
             .ToHashSet();
-        await _cacheService.SetAsync(cacheKey, permissions, cancellationToken: cancellationToken);
+        await cacheService.SetAsync(cacheKey, permissions, cancellationToken: cancellationToken);
 
         return permissions;
     }

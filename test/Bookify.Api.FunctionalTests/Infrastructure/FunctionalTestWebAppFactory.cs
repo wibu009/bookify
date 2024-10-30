@@ -77,7 +77,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
         await InitializeTestUsersAsync();
     }
 
-    public async Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
         await _keycloakContainer.StopAsync();
         await _redisContainer.StopAsync();
