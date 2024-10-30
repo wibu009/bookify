@@ -1,5 +1,4 @@
-﻿using Bookify.Infrastructure;
-using Bookify.Infrastructure.Data;
+﻿using Bookify.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

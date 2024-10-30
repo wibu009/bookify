@@ -1,6 +1,7 @@
 ﻿using Bookify.Domain.UnitTests.Infrastructure;
 using Bookify.Domain.Users;
 using Bookify.Domain.Users.Events;
+using Bookify.Shared.Authorization;
 
 namespace Bookify.Domain.UnitTests.Users;
 
@@ -36,6 +37,6 @@ public class UserTests : BaseTest
           var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
           
           // Assert
-          user.Roles.Should().Contain(Role.Registered);
+          user.Roles.Should().Contain(new Role(1, Roles.Basic));
      }
 }

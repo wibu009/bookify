@@ -1,6 +1,6 @@
 ﻿using Bookify.Application.Abstractions.Authentication;
-using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Messaging;
+using Bookify.Application.Abstractions.Persistent;
 using Bookify.Domain.Abstractions;
 using Bookify.Shared.Core;
 using Dapper;

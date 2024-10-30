@@ -1,17 +1,22 @@
 ﻿using Bookify.Api.Middleware;
-using Bookify.Infrastructure;
-using Bookify.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Bookify.Infrastructure.Persistence;
 
 namespace Bookify.Api.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static void ApplyMigrations(this IApplicationBuilder app)
+    public static async Task UpdateDatabaseAsync(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        dbContext.Database.Migrate();
+        var databaseUpdater = scope.ServiceProvider.GetRequiredService<DatabaseUpdater>();
+        await databaseUpdater.UpdateDatabaseAsync();
+    }
+    
+    public static async Task SeedDataAsync(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var databaseSeeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+        await databaseSeeder.SeedDataAsync();
     }
     
     public static void UseCustomExceptionHandler(this IApplicationBuilder app)

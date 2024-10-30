@@ -54,11 +54,42 @@ public static class Permissions
         Build(Resources.Reviews, Actions.Export),
         #endregion
     ];
-
-    public static readonly string[] Basic =
-    [
-        
-    ];
+    
+    public static readonly string[] Basic = Filter(
+        [Resources.Bookings, Resources.Apartments, Resources.Reviews], 
+        [Actions.View, Actions.Search], 
+        [Build(Resources.Bookings, Actions.Create),
+            Build(Resources.Bookings, Actions.Update),
+            Build(Resources.Reviews, Actions.Create),
+            Build(Resources.Reviews, Actions.Update)]
+    );
+    
+    public static readonly string[] Admin = Filter(Resources.All, Actions.All);
     
     public static string Build(string resource, string action) => $"{resource}:{action}";
+    
+    private static string[] Filter(string[] resources, string[] actions, string[]? exceptions = null, string[]? excludes = null)
+    {
+        var filteredPermissions = All
+            .Where(permission =>
+                resources.Any(resource => permission.StartsWith(resource + ":")) &&
+                actions.Any(action => permission.EndsWith(":" + action)))
+            .ToList();
+        
+        if (exceptions != null)
+        {
+            filteredPermissions.AddRange(
+                exceptions.Where(exception => !filteredPermissions.Contains(exception))
+            );
+        }
+        
+        if (excludes != null)
+        {
+            filteredPermissions = filteredPermissions
+                .Where(permission => !excludes.Contains(permission))
+                .ToList();
+        }
+
+        return filteredPermissions.ToArray();
+    }
 }

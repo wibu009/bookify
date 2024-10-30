@@ -1,7 +1,6 @@
-﻿using Bookify.Application.Abstractions.Data;
-using Bookify.Infrastructure;
+﻿using Bookify.Application.Abstractions.Persistent;
 using Bookify.Infrastructure.Authentication;
-using Bookify.Infrastructure.Data;
+using Bookify.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

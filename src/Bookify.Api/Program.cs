@@ -24,6 +24,8 @@ builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();
 
+await app.UpdateDatabaseAsync();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,8 +40,8 @@ if (app.Environment.IsDevelopment())
             options.SwaggerEndpoint(url, name);
         }
     });
-    app.ApplyMigrations();
-    app.SeedData();
+
+    await app.SeedDataAsync();
 }
 
 app.UseHttpsRedirection();

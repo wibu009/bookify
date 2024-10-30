@@ -1,35 +1,27 @@
 ﻿using System.Buffers;
-using System.Text;
 using System.Text.Json;
 using Bookify.Application.Abstractions.Caching;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Bookify.Infrastructure.Caching;
 
-internal sealed class DistributedCacheService : ICacheService
+internal sealed class DistributedCacheService(IDistributedCache distributedCache) : ICacheService
 {
-    private readonly IDistributedCache _distributedCache;
-    
-    public DistributedCacheService(IDistributedCache distributedCache)
-    {
-        _distributedCache = distributedCache;
-    }
-    
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
     {
-        var bytes = await _distributedCache.GetAsync(key, cancellationToken);
+        var bytes = await distributedCache.GetAsync(key, cancellationToken);
         return bytes is null ? default : Deserialize<T>(bytes);
     }
 
     public Task SetAsync<T>(string key, T value, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
     {
         var bytes = Serialize(value);
-        return _distributedCache.SetAsync(key, bytes, CacheOptions.Create(expiration), cancellationToken);
+        return distributedCache.SetAsync(key, bytes, DistributedCacheOptions.Create(expiration), cancellationToken);
     }
 
     public Task RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
-        return _distributedCache.RemoveAsync(key, cancellationToken);
+        return distributedCache.RemoveAsync(key, cancellationToken);
     }
     
     private static T? Deserialize<T>(byte[] bytes)
