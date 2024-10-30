@@ -12,9 +12,9 @@ public static class DependencyInjection
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
-            cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            cfg.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
+            cfg.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
+            cfg.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+            cfg.AddOpenBehavior(typeof(QueryCachingPipelineBehavior<,>));
         });
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         services.AddTransient<PricingService>();

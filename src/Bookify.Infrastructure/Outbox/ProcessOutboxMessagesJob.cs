@@ -1,6 +1,7 @@
 ﻿using System.Data;
-using Bookify.Application.Abstractions.Data;
+using Bookify.Application.Abstractions.Persistent;
 using Bookify.Domain.Abstractions;
+using Bookify.Infrastructure.Jobs;
 using Dapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,36 +11,26 @@ using Quartz;
 
 namespace Bookify.Infrastructure.Outbox;
 
-[DisallowConcurrentExecution]
-internal sealed class ProcessOutboxMessagesJob : IJob
+[DisallowConcurrentExecution, JobSchedule(0, 0 , 10)]
+internal sealed class ProcessOutboxMessagesJob(
+    ISqlConnectionFactory sqlConnectionFactory,
+    IPublisher publisher,
+    IOptions<OutboxOptions> outboxOptions,
+    ILogger<ProcessOutboxMessagesJob> logger)
+    : IJob
 {
     private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All
     };
-    
-    private readonly ISqlConnectionFactory _sqlConnectionFactory;
-    private readonly IPublisher _publisher;
-    private readonly OutboxOptions _outboxOptions;
-    private readonly ILogger<ProcessOutboxMessagesJob> _logger;
 
-    public ProcessOutboxMessagesJob(
-        ISqlConnectionFactory sqlConnectionFactory,
-        IPublisher publisher,
-        IOptions<OutboxOptions> outboxOptions,
-        ILogger<ProcessOutboxMessagesJob> logger)
-    {
-        _sqlConnectionFactory = sqlConnectionFactory;
-        _publisher = publisher;
-        _outboxOptions = outboxOptions.Value;
-        _logger = logger;
-    }
+    private readonly OutboxOptions _outboxOptions = outboxOptions.Value;
 
     public async Task Execute(IJobExecutionContext context)
     {
-        _logger.LogInformation("Beginning to process outbox messages...");
+        logger.LogInformation("Beginning to process outbox messages...");
 
-        using var connection = _sqlConnectionFactory.CreateConnection();
+        using var connection = sqlConnectionFactory.CreateConnection();
         using var transaction = connection.BeginTransaction();
         
         var outboxMessages = await GetOutboxMessages(connection, transaction);
@@ -50,11 +41,11 @@ internal sealed class ProcessOutboxMessagesJob : IJob
             try
             {
                 var domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(outboxMessage.Content, JsonSerializerSettings)!;
-                await _publisher.Publish(domainEvent, context.CancellationToken);
+                await publisher.Publish(domainEvent, context.CancellationToken);
             }
             catch (Exception caughtException)
             {
-                _logger.LogError(caughtException, "Exception while processing outbox message {MessageId}", outboxMessage.Id);
+                logger.LogError(caughtException, "Exception while processing outbox message {MessageId}", outboxMessage.Id);
                 exception = caughtException;
             }
             
@@ -63,7 +54,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
         
         transaction.Commit();
         
-        _logger.LogInformation("Completed processing outbox messages");
+        logger.LogInformation("Completed processing outbox messages");
     }
 
     private async Task<IReadOnlyList<OutboxMessageResponse>> GetOutboxMessages(IDbConnection connection,

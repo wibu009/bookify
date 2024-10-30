@@ -1,7 +1,6 @@
-﻿using Bookify.Application.Abstractions.Data;
-using Bookify.Infrastructure;
+﻿using Bookify.Application.Abstractions.Persistent;
 using Bookify.Infrastructure.Authentication;
-using Bookify.Infrastructure.Data;
+using Bookify.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -69,7 +68,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         await _keycloakContainer.StartAsync();
     }
 
-    public async Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
         await _keycloakContainer.StopAsync();
         await _redisContainer.StopAsync();

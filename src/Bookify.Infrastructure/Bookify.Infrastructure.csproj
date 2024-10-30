@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Bookify.Application\Bookify.Application.csproj" />
+      <ProjectReference Include="..\Bookify.Shared\Bookify.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -16,6 +17,7 @@
       <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.2" />
       <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
       <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="8.0.1" />
+      <PackageReference Include="Bogus" Version="35.6.1" />
       <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />

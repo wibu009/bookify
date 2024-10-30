@@ -5,19 +5,12 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Bookify.Api.OpenApi;
 
-public sealed class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
+public sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+    : IConfigureNamedOptions<SwaggerGenOptions>
 {
-    private readonly IApiVersionDescriptionProvider _apiVersionDescriptionProvider;
-    
-    public ConfigureSwaggerOptions(
-        IApiVersionDescriptionProvider apiVersionDescriptionProvider)
-    {
-        _apiVersionDescriptionProvider = apiVersionDescriptionProvider;
-    }
-    
     public void Configure(SwaggerGenOptions options)
     {
-        foreach (var description in _apiVersionDescriptionProvider.ApiVersionDescriptions)
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
         }
@@ -28,7 +21,7 @@ public sealed class ConfigureSwaggerOptions : IConfigureNamedOptions<SwaggerGenO
         Configure(options);
     }
     
-    private OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
+    private static OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
     {
         var info = new OpenApiInfo
         {

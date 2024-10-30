@@ -21,13 +21,18 @@ public sealed class User : Entity
     public string IdentityId { get; private set; } = string.Empty;
     public IReadOnlyList<Role> Roles => _roles.ToList();
 
-    public static User Create(FirstName firstName, LastName lastName, Email email)
+    public static User Create(FirstName firstName, LastName lastName, Email email, Role? role = null)
     {
         var user = new User(Guid.NewGuid(), firstName, lastName, email);
         
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
         
-        user._roles.Add(Role.Registered);
+        user._roles.Add(new Role(1, Bookify.Shared.Authorization.Roles.Basic));
+        
+        if (role is not null)
+        {
+            user._roles.Add(role);
+        }
         
         return user;
     }

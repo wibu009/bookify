@@ -3,14 +3,10 @@ using Microsoft.Extensions.Options;
 
 namespace Bookify.Infrastructure.Authorization;
 
-internal sealed class PermissionAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
+internal sealed class PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> authorizationOptions)
+    : DefaultAuthorizationPolicyProvider(authorizationOptions)
 {
-    private readonly AuthorizationOptions _authorizationOptions;
-    
-    public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> authorizationOptions) : base(authorizationOptions)
-    {
-        _authorizationOptions = authorizationOptions.Value;
-    }
+    private readonly AuthorizationOptions _authorizationOptions = authorizationOptions.Value;
 
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {

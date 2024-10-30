@@ -1,4 +1,5 @@
 ﻿using Bookify.Domain.Abstractions;
+using Bookify.Shared.Core;
 
 namespace Bookify.Domain.Users;
 

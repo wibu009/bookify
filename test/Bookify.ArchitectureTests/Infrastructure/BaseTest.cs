@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using Bookify.Application.Abstractions.Messaging;
 using Bookify.Domain.Abstractions;
-using Bookify.Infrastructure;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Bookify.Infrastructure.Persistence;
 
 namespace Bookify.ArchitectureTests.Infrastructure;
 

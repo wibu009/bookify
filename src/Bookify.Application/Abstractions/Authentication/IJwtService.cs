@@ -1,4 +1,4 @@
-﻿using Bookify.Domain.Abstractions;
+﻿using Bookify.Shared.Core;
 
 namespace Bookify.Application.Abstractions.Authentication;
 

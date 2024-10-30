@@ -1,4 +1,5 @@
 ﻿using Bookify.Domain.Abstractions;
+using Bookify.Shared.Core;
 using MediatR;
 
 namespace Bookify.Application.Abstractions.Messaging;

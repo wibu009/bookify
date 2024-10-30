@@ -2,6 +2,7 @@
 using Bookify.Application.Abstractions.Time;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Bookings;
+using Bookify.Shared.Core;
 
 namespace Bookify.Application.Bookings.RejectBooking;
 
