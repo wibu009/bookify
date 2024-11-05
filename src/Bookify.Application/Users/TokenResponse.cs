@@ -1,4 +1,4 @@
-﻿namespace Bookify.Application.Users.LoginUser;
+﻿namespace Bookify.Application.Users;
 
 public sealed record TokenResponse(
     string AccessToken,

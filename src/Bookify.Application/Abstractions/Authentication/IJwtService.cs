@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Users.LoginUser;
+﻿using Bookify.Application.Users;
+using Bookify.Application.Users.LoginUser;
 using Bookify.Shared.Core;
 
 namespace Bookify.Application.Abstractions.Authentication;
