@@ -46,7 +46,7 @@ public class UsersController(ISender sender) : ControllerBase
         return Ok(result.Value);
     }
     
-    [HttpPost("refresh-token"), Authorize]
+    [HttpPost("refresh-token")]
     public async Task<IActionResult> RefreshToken(string refreshToken, CancellationToken cancellationToken)
     {
         var command = new RefreshTokenCommand(refreshToken);
