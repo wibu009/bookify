@@ -1,12 +1,16 @@
 namespace Bookify.Domain.Abstractions;
 
-public abstract class Entity
+public abstract class Entity : IAuditable
 {
     protected Entity(Guid id) => Id = id;
     
     protected Entity(){}
     
     public Guid Id { get; init; }
+    public DateTimeOffset Created { get; set; }
+    public Guid CreatedBy { get; set; }
+    public DateTimeOffset LastModified { get; set; }
+    public Guid? LastModifiedBy { get; set; }
     
     private readonly List<IDomainEvent> _domainEvents = [];
     

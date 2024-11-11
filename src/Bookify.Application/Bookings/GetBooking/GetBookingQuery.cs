@@ -1,5 +1,4 @@
 ﻿using Bookify.Application.Abstractions.Caching;
-using Bookify.Application.Abstractions.Messaging;
 
 namespace Bookify.Application.Bookings.GetBooking;
 

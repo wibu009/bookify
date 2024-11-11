@@ -12,7 +12,7 @@ internal sealed class UserContext : IUserContext
         _httpContextAccessor = httpContextAccessor;
     }
     
-    public Guid UserId => _httpContextAccessor.HttpContext?.User?.GetUserId() ?? throw new ApplicationException("User context is unavailable");
+    public Guid UserId => _httpContextAccessor.HttpContext?.User.GetUserId() ?? Guid.Empty;
     
-    public string IdentityId => _httpContextAccessor.HttpContext?.User?.GetIdentityId() ?? throw new ApplicationException("User context is unavailable");
+    public string IdentityId => _httpContextAccessor.HttpContext?.User.GetIdentityId() ?? string.Empty;
 }
