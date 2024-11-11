@@ -24,7 +24,7 @@ public sealed class DatabaseSeeder(ApplicationDbContext dbContext)
         {
             var apartment = Apartment.Create(
                 name: new Name(faker.Company.CompanyName()),
-                description: new Description("Amazing view"),
+                description: new Description(faker.Lorem.Paragraph()),
                 address: new Address(
                     Country: faker.Address.Country(),
                     State: faker.Address.State(),

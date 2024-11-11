@@ -1,9 +1,6 @@
-﻿using System.Data;
-using Bookify.Application.Abstractions.Persistent;
-using Bookify.Domain.Abstractions;
+﻿using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Jobs;
 using Bookify.Infrastructure.Persistence;
-using Dapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -68,9 +65,9 @@ internal sealed class ProcessOutboxMessagesJob(
         }
     }
 
-    private async Task<List<OutboxMessage>> GetOutboxMessages(ApplicationDbContext dbContext)
+    private async Task<List<OutboxMessage>> GetOutboxMessages(ApplicationDbContext context)
     {
-        return await dbContext.Set<OutboxMessage>()
+        return await context.Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null)
             .OrderBy(m => m.OccurredOnUtc)
             .Take(_outboxOptions.BatchSize)

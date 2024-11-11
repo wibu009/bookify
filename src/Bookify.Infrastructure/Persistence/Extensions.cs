@@ -21,7 +21,6 @@ public static class Extensions
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection") 
                                ?? throw new ArgumentNullException(nameof(configuration));
-        services.AddScoped<ISaveChangesInterceptor, OutboxSaveChangesInterceptor>();
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options
@@ -33,6 +32,8 @@ public static class Extensions
                 .GetServices<ISaveChangesInterceptor>()
                 .ToArray<IInterceptor>());
         });
+        services.AddScoped<ISaveChangesInterceptor, OutboxSaveChangesInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, AuditSaveChangesInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IApartmentRepository, ApartmentRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
