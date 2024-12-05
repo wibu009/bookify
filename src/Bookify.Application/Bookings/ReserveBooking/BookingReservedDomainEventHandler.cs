@@ -27,8 +27,10 @@ internal sealed class BookingReservedDomainEventHandler(
             return;
         }
         
-        await emailService.SendAsync(user.Email,
+        await emailService.SendAsync(
+            [user.Email.Value],
             "Booking reserved!",
-            "You have 10 minutes to confirm your booking");
+            "You have 10 minutes to confirm your booking",
+            ct: cancellationToken);
     }
 }

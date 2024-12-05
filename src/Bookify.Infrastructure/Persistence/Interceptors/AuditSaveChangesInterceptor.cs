@@ -14,11 +14,11 @@ public sealed class AuditSaveChangesInterceptor(IUserContext userContext, IDateT
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
         UpdateEntities(eventData.Context);
-        await SaveAuditLogsDirectlyAsync(eventData);
+        await SaveAuditLogsAsync(eventData);
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
-    private async Task SaveAuditLogsDirectlyAsync(DbContextEventData eventData)
+    private async Task SaveAuditLogsAsync(DbContextEventData eventData)
     {
         if (eventData.Context == null) return;
         

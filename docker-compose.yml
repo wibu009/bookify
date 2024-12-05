@@ -1,6 +1,6 @@
 services:
   bookify.api:
-    image: ${DOCKER_REGISTRY-}bookify-api      # Custom API service, version managed via Docker registry
+    image: ${DOCKER_REGISTRY-}bookify-api
     container_name: bookify.api
     build:
       context: .
@@ -11,9 +11,23 @@ services:
     depends_on:
       bookify.db:
         condition: service_healthy
+      bookify.idp:
+        condition: service_healthy
+      bookify.seq:
+        condition: service_healthy
+      bookify.cache:
+        condition: service_healthy
+      bookify.smtp:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   bookify.db:
-    image: postgres:latest                     # Postgres 16.2 (latest at time of setup)
+    image: postgres:latest
     container_name: bookify.database
     environment:
       - POSTGRES_USER=postgres
@@ -29,9 +43,9 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-  
+
   bookify.idp:
-    image: quay.io/keycloak/keycloak:latest    # Keycloak 25.0.6 (latest version used)
+    image: quay.io/keycloak/keycloak:latest
     container_name: bookify.identity
     environment:
       - KC_HEALTH_ENABLED=true
@@ -45,7 +59,13 @@ services:
     command:
       - start-dev
       - --import-realm
-  
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
   bookify.seq:
     image: datalust/seq:latest
     container_name: bookify.sequence
@@ -54,10 +74,35 @@ services:
     ports:
       - "5341:5341"
       - "8082:80"
-  
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5341/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
   bookify.cache:
     image: redis:latest
     container_name: bookify.redis
     restart: always
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  bookify.smtp:
+    image: changemakerstudiosus/papercut-smtp:latest
+    container_name: bookify.papercut
+    ports:
+      - "25:25"
+      - "8083:8083"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

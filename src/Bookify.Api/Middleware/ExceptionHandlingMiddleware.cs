@@ -54,8 +54,8 @@ public class ExceptionHandlingMiddleware(
                 null)
         };
     }
-    
-    internal record ExceptionDetails(
+
+    private record ExceptionDetails(
         int Status,
         string Type,
         string Title,
