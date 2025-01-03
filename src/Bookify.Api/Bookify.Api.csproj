@@ -29,4 +29,10 @@
     <ProjectReference Include="..\Bookify.Shared\Bookify.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Endpoints\Apartments\" />
+    <Folder Include="Endpoints\Bookings\" />
+    <Folder Include="Endpoints\Reviews\" />
+  </ItemGroup>
+
 </Project>
