@@ -5,18 +5,21 @@ using MediatR;
 
 namespace Bookify.Api.Endpoints.Users;
 
-public class GetProfileEndpoint : IEndpoint
+public class GetLoggedInUserEndpoint : IEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        app.MapGet("users/me", async (ISender sender, CancellationToken cancellationToken) =>
+        builder.MapGet("users/me", async (ISender sender, CancellationToken cancellationToken) =>
         {
             var query = new GetLoggedInUserQuery();
             var result = await sender.Send(query, cancellationToken);
             return Results.Ok(result.Value);
         })
+        .WithName("GetLoggedInUser")
+        .WithDescription("Get the currently logged in user.")
+        .Produces<UserResponse>()
         .HasPermission(Resources.Users, Actions.View)
-        .MapToApiVersion(ApiVersions.V1)
+        .MapToApiVersion(1)
         .WithTags(Tags.Users);
     }
 }

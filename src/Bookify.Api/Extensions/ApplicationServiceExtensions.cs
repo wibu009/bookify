@@ -1,4 +1,5 @@
-﻿using Bookify.Api.OpenApi;
+﻿using Asp.Versioning;
+using Bookify.Api.OpenApi;
 
 namespace Bookify.Api.Extensions;
 
@@ -10,6 +11,19 @@ public static class ApplicationServiceExtensions
         services.AddSwaggerGen();
 
         services.AddHttpContextAccessor();
+        
+        services.AddApiVersioning(options => 
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
         
         services.ConfigureOptions<ConfigureSwaggerOptions>();
         

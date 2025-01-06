@@ -1,8 +1,4 @@
-﻿using Asp.Versioning.ApiExplorer;
-using Bookify.Api.Middleware;
-using Bookify.Infrastructure.Persistence;
-
-namespace Bookify.Api.Extensions;
+﻿namespace Bookify.Api.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

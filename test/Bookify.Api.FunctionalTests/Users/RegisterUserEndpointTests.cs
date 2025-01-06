@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Bookify.Api.Controllers.Users;
+using Bookify.Api.Endpoints.Users;
 using Bookify.Api.FunctionalTests.Infrastructure;
 
 namespace Bookify.Api.FunctionalTests.Users;
 
-public class RegisterUserTests : BaseFunctionalTest
+public class RegisterUserEndpointTests : BaseFunctionalTest
 {
-    public RegisterUserTests(FunctionalTestWebAppFactory factory) : base(factory)
+    public RegisterUserEndpointTests(FunctionalTestWebAppFactory factory) : base(factory)
     {
     }
 

@@ -1,4 +1,4 @@
-﻿using Bookify.Api.Controllers.Users;
+﻿using Bookify.Api.Endpoints.Users;
 
 namespace Bookify.Api.FunctionalTests.Users;
 

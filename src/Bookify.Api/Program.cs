@@ -1,5 +1,6 @@
+using System.Reflection;
+using Asp.Versioning;
 using Bookify.Api.Extensions;
-using Bookify.Api.OpenApi;
 using Bookify.Application;
 using Bookify.Infrastructure;
 using HealthChecks.UI.Client;
@@ -14,10 +15,20 @@ builder.Host.UseSerilog((context, configuration) =>
 });
 
 builder.Services.AddApplication();
-builder.Services.AddPresentation();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPresentation();
+
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
+
+var apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
+var versionedGroups = app.MapGroup("/api/v{version:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+app.MapEndpoints(versionedGroups);
 
 await app.UpdateDatabaseAsync();
 
@@ -29,6 +40,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapHealthChecks("health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}); 
+
 app.UseRequestContextLogging();
 app.UseSerilogRequestLogging();
 
@@ -36,11 +52,6 @@ app.UseCustomExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapHealthChecks("health", new HealthCheckOptions
-{
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-}); 
 
 app.Run();
 
