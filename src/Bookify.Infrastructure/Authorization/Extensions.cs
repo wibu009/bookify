@@ -9,6 +9,7 @@ public static class Extensions
 {
     public static IServiceCollection AddAuthorization(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddAuthorization();
         services.AddScoped<AuthorizationService>();
         services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
         services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
