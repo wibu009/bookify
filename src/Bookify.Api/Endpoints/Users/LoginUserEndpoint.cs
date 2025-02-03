@@ -9,22 +9,24 @@ public class LoginUserEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
         builder.MapPost("users/login", async (
-            ISender sender,
-            LogInUserRequest request,
-            CancellationToken cancellationToken) =>
-        {
-            var command = new LogInUserCommand(request.Email, request.Password);
-            var result = await sender.Send(command, cancellationToken);
-            return result.IsFailure ? 
-                Results.Unauthorized() :
-                Results.Ok(result.Value);
-        })
-        .WithName("LoginUser")
-        .WithDescription("Log in a user and return a JWT token.")
-        .Produces<TokenResponse>()
-        .AllowAnonymous()
-        .MapToApiVersion(1)
-        .WithTags(Tags.Users);
+                ISender sender,
+                LogInUserRequest request,
+                CancellationToken cancellationToken) =>
+            {
+                var command = new LogInUserCommand(request.Email, request.Password);
+                var result = await sender.Send(command, cancellationToken);
+                return result.IsFailure ? 
+                    Results.Unauthorized() :
+                    Results.Ok(result.Value);
+            })
+            .WithName("LoginUser")
+            .WithSummary("Logs in a user and returns a JWT token.")
+            .WithDescription("Allows a user to log in using email and password and receive a JWT token for authentication.")
+            .Produces<TokenResponse>()
+            .Produces(StatusCodes.Status401Unauthorized)
+            .AllowAnonymous()
+            .MapToApiVersion(1)
+            .WithTags(Tags.Users);
     }
 }
 

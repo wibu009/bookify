@@ -13,28 +13,30 @@ public class CreateApartmentEndpoint : IEndpoint
                 ISender sender, 
                 CreateApartmentRequest request, 
                 CancellationToken cancellationToken) =>
-        {
-            var command = new CreateApartmentCommand(
-                request.Name,
-                request.Description,
-                request.Country,
-                request.State,
-                request.ZipCode,
-                request.City,
-                request.Street,
-                request.Price,
-                request.CleaningFee,
-                request.Currency,
-                request.Amenities);
-            var result = await sender.Send(command, cancellationToken);
-            return result.IsFailure ? Results.BadRequest(result.Error) : Results.Ok(result.Value);
-        })
-        .WithName("CreateApartment")
-        .WithDescription("Create a new apartment.")
-        .Produces<Guid>()
-        .HasPermission(Resources.Apartments, Actions.Create)
-        .MapToApiVersion(1)
-        .WithTags(Tags.Apartments);
+            {
+                var command = new CreateApartmentCommand(
+                    request.Name,
+                    request.Description,
+                    request.Country,
+                    request.State,
+                    request.ZipCode,
+                    request.City,
+                    request.Street,
+                    request.Price,
+                    request.CleaningFee,
+                    request.Currency,
+                    request.Amenities);
+                var result = await sender.Send(command, cancellationToken);
+                return result.IsFailure ? Results.BadRequest(result.Error) : Results.Ok(result.Value);
+            })
+            .WithName("CreateApartment")
+            .WithSummary("Creates a new apartment listing.")
+            .WithDescription("Allows authorized users to create a new apartment by providing details like name, location, price, and amenities.")
+            .Produces<Guid>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .HasPermission(Resources.Apartments, Actions.Create)
+            .MapToApiVersion(1)
+            .WithTags(Tags.Apartments);
     }
 }
 

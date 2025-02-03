@@ -23,7 +23,7 @@ internal sealed class ProcessOutboxMessagesJob(
     };
 
     private readonly OutboxOptions _outboxOptions = outboxOptions.Value;
-
+    
     public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Beginning to process outbox messages...");

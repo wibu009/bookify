@@ -11,19 +11,21 @@ public class ConfirmBooking : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
         builder.MapPut("bookings/{id:guid}/confirm", async (
-            ISender sender,
-            [FromRoute] Guid id,
-            CancellationToken cancellationToken) => 
-        {
-            var command = new ConfirmBookingCommand(id);
-            var result = await sender.Send(command, cancellationToken);
-            return result.IsFailure ? Results.BadRequest(result.Error) : Results.NoContent();
-        })
-        .Produces(StatusCodes.Status204NoContent)
-        .WithName("ConfirmBooking")
-        .WithDescription("Confirm a booking.")
-        .HasPermission(Resources.Bookings, Actions.Update)
-        .MapToApiVersion(1)
-        .WithTags(Tags.Bookings);
+                ISender sender,
+                [FromRoute] Guid id,
+                CancellationToken cancellationToken) => 
+            {
+                var command = new ConfirmBookingCommand(id);
+                var result = await sender.Send(command, cancellationToken);
+                return result.IsFailure ? Results.BadRequest(result.Error) : Results.NoContent();
+            })
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .WithName("ConfirmBooking")
+            .WithSummary("Confirms a booking.")
+            .WithDescription("Allows users to confirm a booking using its unique ID.")
+            .HasPermission(Resources.Bookings, Actions.Update)
+            .MapToApiVersion(1)
+            .WithTags(Tags.Bookings);
     }
 }

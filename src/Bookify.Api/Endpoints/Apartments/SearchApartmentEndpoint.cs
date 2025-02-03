@@ -10,20 +10,21 @@ public class SearchApartmentEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
         builder.MapPost("apartments/search", async (
-            ISender sender,
-            DateOnly startDate,
-            DateOnly endDate,
-            CancellationToken cancellationToken) =>
-        {
-            var query = new SearchApartmentsQuery(startDate, endDate);
-            var result = await sender.Send(query, cancellationToken);
-            return Results.Ok(result.Value);
-        })
-        .WithName("SearchApartment")
-        .WithDescription("Search for apartments based on start and end dates of the booking.")
-        .Produces<List<ApartmentResponse>>()
-        .HasPermission(Resources.Apartments, Actions.Search)
-        .MapToApiVersion(1)
-        .WithTags(Tags.Apartments);
+                ISender sender,
+                DateOnly startDate,
+                DateOnly endDate,
+                CancellationToken cancellationToken) =>
+            {
+                var query = new SearchApartmentsQuery(startDate, endDate);
+                var result = await sender.Send(query, cancellationToken);
+                return Results.Ok(result.Value);
+            })
+            .WithName("SearchApartment")
+            .WithSummary("Searches for available apartments.")
+            .WithDescription("Allows users to search for available apartments within a specified date range.")
+            .Produces<List<ApartmentResponse>>()
+            .HasPermission(Resources.Apartments, Actions.Search)
+            .MapToApiVersion(1)
+            .WithTags(Tags.Apartments);
     }
 }

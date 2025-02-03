@@ -11,19 +11,21 @@ public class CancelBookingEndpoint : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
         builder.MapPut("bookings/{id:guid}/cancel", async (
-            ISender sender,
-            [FromRoute] Guid id,
-            CancellationToken cancellationToken) => 
-        {
-            var command = new CancelBookingCommand(id);
-            var result = await sender.Send(command, cancellationToken);
-            return result.IsFailure ? Results.BadRequest(result.Error) : Results.NoContent();
-        })
-        .Produces(StatusCodes.Status204NoContent)
-        .WithName("CancelBooking")
-        .WithDescription("Cancel a booking.")
-        .HasPermission(Resources.Bookings, Actions.Update)
-        .MapToApiVersion(1)
-        .WithTags(Tags.Bookings);
+                ISender sender,
+                [FromRoute] Guid id,
+                CancellationToken cancellationToken) => 
+            {
+                var command = new CancelBookingCommand(id);
+                var result = await sender.Send(command, cancellationToken);
+                return result.IsFailure ? Results.BadRequest(result.Error) : Results.NoContent();
+            })
+            .Produces(StatusCodes.Status204NoContent)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .WithName("CancelBooking")
+            .WithSummary("Cancels an existing booking.")
+            .WithDescription("Allows users to cancel a booking using its unique ID.")
+            .HasPermission(Resources.Bookings, Actions.Update)
+            .MapToApiVersion(1)
+            .WithTags(Tags.Bookings);
     }
 }
