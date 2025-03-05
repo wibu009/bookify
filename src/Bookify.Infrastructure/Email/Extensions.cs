@@ -12,7 +12,7 @@ public static class Extensions
             ?? throw new ArgumentNullException(nameof(configuration));
         
         services.AddFluentEmail(options.From, options.DisplayName)
-            .AddSmtpSender(options.Host, options.Port, options.UserName, options.Password)
+            .AddSmtpSender(options.Host, options.Port) // for testing purposes, you should configure more security for smtp here 
             .AddRazorRenderer();
         services.AddScoped<IEmailService, EmailService>();
         
