@@ -26,6 +26,7 @@ public class LoginUserEndpoint : IEndpoint
             .Produces(StatusCodes.Status401Unauthorized)
             .AllowAnonymous()
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Users);
     }
 }

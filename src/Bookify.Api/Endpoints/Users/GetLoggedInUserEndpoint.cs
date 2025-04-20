@@ -21,6 +21,7 @@ public class GetLoggedInUserEndpoint : IEndpoint
             .Produces<UserResponse>(StatusCodes.Status200OK)
             .RequireAuthorization()
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Users);
     }
 }

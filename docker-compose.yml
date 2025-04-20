@@ -49,6 +49,7 @@ services:
     container_name: bookify.identity
     environment:
       - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
     ports:
@@ -60,7 +61,7 @@ services:
       - start-dev
       - --import-realm
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test:  ['CMD-SHELL', '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)new java.net.URL(args[0]).openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://localhost:9000/health/live']
       interval: 10s
       timeout: 5s
       retries: 3
@@ -75,11 +76,8 @@ services:
       - "5341:5341"
       - "8082:80"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5341/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      test: ["CMD", "true"]
+      interval: 0s
 
   bookify.cache:
     image: redis:latest
@@ -98,14 +96,8 @@ services:
     image: changemakerstudiosus/papercut-smtp:latest
     container_name: bookify.papercut
     ports:
-      - "25:25"
       - "8083:8083"
-    environment:
-      PAPERCUT_ADMIN_USERNAME: admin
-      PAPERCUT_ADMIN_PASSWORD: password
+      - "25:25"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8083"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+      test: [ "CMD", "true" ]
+      interval: 0s

@@ -3,16 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Bookify.Infrastructure.Authentication;
 
-internal sealed class UserContext : IUserContext
+internal sealed class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    public Guid UserId => httpContextAccessor.HttpContext?.User.GetUserId() ?? Guid.Empty;
     
-    public UserContext(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
-    
-    public Guid UserId => _httpContextAccessor.HttpContext?.User.GetUserId() ?? Guid.Empty;
-    
-    public string IdentityId => _httpContextAccessor.HttpContext?.User.GetIdentityId() ?? string.Empty;
+    public string IdentityId => httpContextAccessor.HttpContext?.User.GetIdentityId() ?? string.Empty;
 }

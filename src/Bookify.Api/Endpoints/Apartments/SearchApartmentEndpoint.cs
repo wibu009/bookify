@@ -25,6 +25,7 @@ public class SearchApartmentEndpoint : IEndpoint
             .Produces<List<ApartmentResponse>>()
             .HasPermission(Resources.Apartments, Actions.Search)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Apartments);
     }
 }

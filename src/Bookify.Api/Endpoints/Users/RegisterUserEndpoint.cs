@@ -29,6 +29,7 @@ public class RegisterUserEndpoint : IEndpoint
             .Produces<string>(StatusCodes.Status400BadRequest)
             .AllowAnonymous()
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Users);
     }
 }

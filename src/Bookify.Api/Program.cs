@@ -35,7 +35,7 @@ await app.UpdateDatabaseAsync();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerWithUi();
+    app.UseScalarUi();
     await app.SeedDataAsync();
 }
 
