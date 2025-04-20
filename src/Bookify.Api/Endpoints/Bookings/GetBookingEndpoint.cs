@@ -24,6 +24,7 @@ public class GetBookingEndpoint : IEndpoint
             .Produces<BookingResponse>()
             .HasPermission(Resources.Bookings, Actions.View)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Bookings);
     }
 }

@@ -27,6 +27,7 @@ public class CreateReviewEndpoint : IEndpoint
             .Produces<string>(StatusCodes.Status400BadRequest)
             .HasPermission(Resources.Reviews, Actions.Create)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Reviews);
     }
 }

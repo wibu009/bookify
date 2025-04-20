@@ -26,6 +26,7 @@ public class RejectBookingEndpoint : IEndpoint
             .WithDescription("Allows users to reject a booking using its unique ID.")
             .HasPermission(Resources.Bookings, Actions.Update)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Bookings);
     }
 }

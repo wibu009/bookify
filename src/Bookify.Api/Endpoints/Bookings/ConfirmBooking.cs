@@ -26,6 +26,7 @@ public class ConfirmBooking : IEndpoint
             .WithDescription("Allows users to confirm a booking using its unique ID.")
             .HasPermission(Resources.Bookings, Actions.Update)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Bookings);
     }
 }

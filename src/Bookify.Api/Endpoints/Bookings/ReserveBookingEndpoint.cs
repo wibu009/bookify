@@ -25,6 +25,7 @@ public class ReserveBookingEndpoint : IEndpoint
             .Produces<string>(StatusCodes.Status400BadRequest)
             .HasPermission(Resources.Bookings, Actions.Create)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Bookings);
     }
 }

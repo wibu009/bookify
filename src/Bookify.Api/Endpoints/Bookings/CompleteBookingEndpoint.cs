@@ -26,6 +26,7 @@ public class CompleteBookingEndpoint : IEndpoint
             .WithDescription("Allows users to mark a booking as complete using its unique ID.")
             .HasPermission(Resources.Bookings, Actions.Update)
             .MapToApiVersion(1)
+            .MapToApiVersion(2)
             .WithTags(Tags.Bookings);
     }
 }

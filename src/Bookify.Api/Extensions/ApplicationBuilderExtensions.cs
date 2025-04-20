@@ -1,8 +1,10 @@
-﻿namespace Bookify.Api.Extensions;
+﻿using Scalar.AspNetCore;
+
+namespace Bookify.Api.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseSwaggerWithUi(this WebApplication app)
+    public static IApplicationBuilder UseSwaggerUi(this WebApplication app)
     {
         app.UseSwagger();
         app.UseSwaggerUI(options =>
@@ -18,6 +20,22 @@ public static class ApplicationBuilderExtensions
             }
         });
 
+        return app;
+    }
+
+    public static IApplicationBuilder UseScalarUi(this WebApplication app)
+    {
+        app.UseSwagger(options =>
+        {
+            options.RouteTemplate = "/openapi/{documentName}.json";
+        });
+        app.MapScalarApiReference(options =>
+        {
+            options
+                .WithLayout(ScalarLayout.Modern)
+                .WithTheme(ScalarTheme.DeepSpace);
+        });
+        
         return app;
     }
 }
