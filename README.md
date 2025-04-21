@@ -41,8 +41,8 @@ The architecture enables easy testing, adaptability to new requirements, and cle
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/Bookify.git
-   cd Bookify
+   git clone https://github.com/wibu009/bookify.git
+   cd bookify
    ```
 
 2. **Configure Environment Variables:**
