@@ -27,7 +27,7 @@ services:
       start_period: 30s
 
   bookify.db:
-    image: postgres:latest
+    image: postgres:16.2
     container_name: bookify.database
     environment:
       - POSTGRES_USER=postgres
@@ -45,7 +45,7 @@ services:
       start_period: 30s
 
   bookify.idp:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:25.0.6
     container_name: bookify.identity
     environment:
       - KC_HEALTH_ENABLED=true
@@ -68,7 +68,7 @@ services:
       start_period: 30s
 
   bookify.seq:
-    image: datalust/seq:latest
+    image: datalust/seq:2024.2
     container_name: bookify.sequence
     environment:
       - ACCEPT_EULA=Y
@@ -80,9 +80,8 @@ services:
       interval: 0s
 
   bookify.cache:
-    image: redis:latest
+    image: redis:7.2.4
     container_name: bookify.redis
-    restart: always
     ports:
       - "6379:6379"
     healthcheck:
@@ -93,11 +92,20 @@ services:
       start_period: 10s
 
   bookify.smtp:
-    image: changemakerstudiosus/papercut-smtp:latest
-    container_name: bookify.papercut
+    image: axllent/mailpit:v1.15.1
+    container_name: bookify.mailpit
     ports:
-      - "8083:8083"
-      - "25:25"
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    command: [
+      "--smtp-auth-allow-insecure"
+    ]
+    environment:
+      - MP_SMTP_USER=admin
+      - MP_SMTP_PASS=password
     healthcheck:
       test: [ "CMD", "true" ]
       interval: 0s
+
+
+
